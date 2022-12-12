@@ -21,6 +21,7 @@ const port = process.env.PORT || 3001;
 
 server.get("/posts", (req, res) => {
   const { _sort, _order } = url.parse(req.url, true).query;
+  res.header("Access-Control-Allow-Origin", "*");
   return res.jsonp(
     sortedBy(filteredPasswordObjs(router.db.__wrapped__.posts), _sort, _order)
   );
@@ -28,6 +29,7 @@ server.get("/posts", (req, res) => {
 
 server.get("/posts/:id", (req, res) => {
   const { id } = req.params;
+  res.header("Access-Control-Allow-Origin", "*");
   return res.jsonp(
     filteredPasswordObj(
       router.db.__wrapped__.posts.find((post) => post.id.toString() === id)
@@ -38,6 +40,7 @@ server.get("/posts/:id", (req, res) => {
 server.get("/comments", (req, res) => {
   const { _sort, _order } = url.parse(req.url, true).query;
   const { postId } = url.parse(req.url, true).query;
+  res.header("Access-Control-Allow-Origin", "*");
   return res.jsonp(
     sortedBy(
       filteredPasswordObjs(
@@ -65,6 +68,7 @@ server.use((req, res, next) => {
         password
       )
     ) {
+      res.header("Access-Control-Allow-Origin", "*");
       return res.status(400).send({ message: "비밀번호를 확인하세요" });
     }
   }
