@@ -82,7 +82,7 @@ server.use(
   })
 );
 
-server.use(cors());
+server.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 
 server.use(router);
 
