@@ -1,3 +1,4 @@
+const { createProxyMiddleware } = require("http-proxy-middleware");
 const jsonServer = require("json-server");
 const path = require("path");
 const url = require("url");
@@ -80,6 +81,14 @@ server.use(
   })
 );
 server.use(router);
+
+server.use(
+  "/api",
+  createProxyMiddleware({
+    target: "http://localhost:3000",
+    changeOrigin: true,
+  })
+);
 
 server.listen(port, () => {
   console.log("JSON Server is running");
