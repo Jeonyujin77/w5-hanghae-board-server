@@ -2,6 +2,7 @@ const { createProxyMiddleware } = require("http-proxy-middleware");
 const jsonServer = require("json-server");
 const path = require("path");
 const url = require("url");
+const cors = require("cors");
 const {
   filteredPasswordObjs,
   filteredPasswordObj,
@@ -80,6 +81,9 @@ server.use(
     "/api/*": "/$1",
   })
 );
+
+server.use(cors());
+
 server.use(router);
 
 server.listen(port, () => {
