@@ -34,11 +34,12 @@ server.get("/posts", (req, res) => {
 
 server.get("/posts/:id", (req, res) => {
   const { id } = req.params;
-  return res.jsonp(
-    filteredPasswordObj(
-      router.db.__wrapped__.posts.find((post) => post.id.toString() === id)
-    )
+  const response = router.db.__wrapped__.posts.find(
+    (post) => post.id.toString() === id
   );
+  return response
+    ? res.jsonp(filteredPasswordObj(response))
+    : res.status(404).send({ message: "해당 데이터를 찾을 수 없습니다" });
 });
 
 server.get("/comments", (req, res) => {
