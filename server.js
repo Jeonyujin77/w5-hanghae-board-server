@@ -18,6 +18,17 @@ const middlewares = jsonServer.defaults({
 });
 
 server.use(middlewares);
+server.use(jsonServer.bodyParser);
+// Add this before server.use(router)
+server.use(
+  jsonServer.rewriter({
+    "/api/*": "/$1",
+  })
+);
+
+server.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+
+server.use(router);
 
 const port = process.env.PORT || 3001;
 
@@ -72,19 +83,6 @@ server.use((req, res, next) => {
   }
   next();
 });
-
-server.use(jsonServer.bodyParser);
-
-// Add this before server.use(router)
-server.use(
-  jsonServer.rewriter({
-    "/api/*": "/$1",
-  })
-);
-
-server.use(cors({ credentials: true, origin: "http://localhost:3000" }));
-
-server.use(router);
 
 server.listen(port, () => {
   console.log("JSON Server is running");
