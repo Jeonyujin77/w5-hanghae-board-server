@@ -1,8 +1,7 @@
-const { createProxyMiddleware } = require("http-proxy-middleware");
 const jsonServer = require("json-server");
 const path = require("path");
 const url = require("url");
-const cors = require("cors");
+
 const {
   filteredPasswordObjs,
   filteredPasswordObj,
@@ -10,25 +9,19 @@ const {
   validPassword,
   sortedBy,
 } = require("./utils");
+const fs = require("fs");
+const os = require("os");
 
-const server = jsonServer.create();
-const router = jsonServer.router(path.resolve(__dirname + "/db.json"));
-const middlewares = jsonServer.defaults({
-  static: path.resolve(__dirname + "/../build/"),
+fs.copyFile("db.json", os.tmpdir() + "/db.json", function (err) {
+  if (err) console.log(err);
+  else console.log("copy file succeed to" + os.tmpdir());
 });
 
+const server = jsonServer.create();
+const router = jsonServer.router(path.resolve(os.tmpdir() + "/db.json"));
+const middlewares = jsonServer.defaults();
+
 server.use(middlewares);
-server.use(jsonServer.bodyParser);
-// Add this before server.use(router)
-server.use(
-  jsonServer.rewriter({
-    "/api/*": "/$1",
-  })
-);
-
-server.use(cors({ credentials: true, origin: "http://localhost:3000" }));
-
-server.use(router);
 
 const port = process.env.PORT || 3001;
 
@@ -64,8 +57,11 @@ server.get("/comments", (req, res) => {
   );
 });
 
+server.use(jsonServer.bodyParser);
+
 server.use((req, res, next) => {
   if (req.method.toString() === "PATCH" || req.method.toString() === "DELETE") {
+    console.log(req);
     if (!req?.body) {
       return res.status(400).send({ message: "입력이 올바르지 않습니다." });
     }
@@ -83,6 +79,8 @@ server.use((req, res, next) => {
   }
   next();
 });
+
+server.use(router);
 
 server.listen(port, () => {
   console.log("JSON Server is running");
