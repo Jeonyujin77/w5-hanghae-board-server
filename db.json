@@ -17,38 +17,5 @@
       "createdAt": "2022-12-09T11:12:30.686"
     }
   ],
-  "comments": [
-    {
-      "id": "557b35dd-7f1d-2582-9659-9854ffa99165",
-      "postId": "1",
-      "comment": "닉네임 짓기 힘들다.ㅋㅋ",
-      "userId": "이미 있는 닉네임",
-      "password": "qwerqwer",
-      "createdAt": "2022-12-12T10:48:34"
-    },
-    {
-      "id": "abc75373-4839-c7e2-cfa0-71556c1bdcd5",
-      "postId": "2",
-      "comment": "2023",
-      "userId": "ㅇㅇ",
-      "password": "2022",
-      "createdAt": "2022-12-12T15:01:14"
-    },
-    {
-      "id": "3baa723f-5cdc-a084-93dd-83465ef69427",
-      "postId": "1",
-      "comment": "익명의 사용자",
-      "userId": "익명",
-      "password": "111qw",
-      "createdAt": "2022-12-12T20:15:54"
-    },
-    {
-      "id": "cbdc67fe-1579-89c3-737f-525633be9ebc",
-      "postId": "1",
-      "comment": "몰?루",
-      "userId": "몰?루",
-      "password": "5555",
-      "createdAt": "2022-12-12T20:19:30"
-    }
-  ]
+  "comments": []
 }
